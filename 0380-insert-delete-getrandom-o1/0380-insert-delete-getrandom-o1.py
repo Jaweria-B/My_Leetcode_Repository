@@ -21,9 +21,8 @@ class RandomizedSet:
             return False
         else:
             oldIndex , numAtEnd = self.toIndex[val] , self.nums[-1]
-            self.toIndex[numAtEnd] = oldIndex
             self.nums[oldIndex], self.nums[-1] = self.nums[-1] , self.nums[oldIndex]
-            
+            self.toIndex[numAtEnd] = oldIndex
             
             self.nums.pop()
             del self.toIndex[val]
