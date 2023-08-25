@@ -5,23 +5,23 @@
 #         self.next = next
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        
-        global front
-        front = head
-        
-        def recursive(curr):
-            global front 
-            
-            if curr != None:
-                
-                if not recursive(curr.next):
-                    return False
-                
-                if curr.val != front.val:
-                    return False
-                
-                front = front.next
-                
-            return True
-        
-        return recursive(head)
+       
+        if head == None or head.next == None:
+            return head
+
+        r_head = None 
+        ptr = head
+
+        while ptr:
+            temp = ListNode(ptr.val)
+            temp.next = r_head
+            r_head = temp
+            ptr = ptr.next
+
+        while head and r_head:
+            if head.val != r_head.val:
+                return False
+            head = head.next
+            r_head = r_head.next
+
+        return True
