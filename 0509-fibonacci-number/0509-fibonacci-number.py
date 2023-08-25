@@ -1,21 +1,17 @@
 class Solution:
     def fib(self, n: int) -> int:
         
-        if n == 0:
-            return 0
-        if n == 1:
-            return 1
-        
-        first = 0
-        sec = 1
-        
-        count = 2
-        
-        while count != n+1:
-            temp = first + sec
-            first = sec
-            sec = temp
+        def find(n, memo):
+            if n == 0 or n == 1:
+                return n
             
-            count += 1
+            if memo[n] != -1:
+                return memo[n]
+            
+            memo[n] = find(n-1, memo) + find(n-2, memo)
+            
+            return memo[n]
         
-        return temp
+        memo = [-1] * (n+1)
+        
+        return find(n, memo)
