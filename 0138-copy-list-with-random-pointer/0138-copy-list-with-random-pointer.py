@@ -9,16 +9,31 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
+        head_list = []
+        visited = {}
+        counter = 0
+        while head:
+            head_list.append(head)
+            visited[head] = counter
+            counter +=1
+            head = head.next
+            
+        ans = Node(0, None, None)
+        ans_list = []
+        for x in head_list:
+            ans.val, ans.next = x.val, Node(0, None, None)
+            ans_list.append(ans)
+            ans = ans.next
+            
+        ans_list[-1].next = None
+        ans = ans_list[0]
         
-        dic={None:None}
-        cur=head
-        while cur:
-            dic[cur]=Node(cur.val)
-            cur=cur.next
-        cur=head
-        while cur:
-            copy=dic[cur]
-            copy.next=dic[cur.next]
-            copy.random=dic[cur.random]
-            cur=cur.next
-        return dic[head]
+        for i, x in enumerate(head_list):
+            if x.random:
+                ans_list[i].random = ans_list[visited[x.random]]
+                #print(visited[x.random])
+                #print(ans_list[visited[x.random]])
+                
+        return ans_list[0]
