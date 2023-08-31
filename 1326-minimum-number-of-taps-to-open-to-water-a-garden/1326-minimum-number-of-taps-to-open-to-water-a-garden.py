@@ -1,22 +1,25 @@
 class Solution:
     def minTaps(self, n: int, ranges: List[int]) -> int:
+        max_reach = [0] * (n+1)
         
-        INF = int(1e9)
-        
-        dp = [INF] * (n+1)
-        
-        dp[0] = 0
+        for i in range(len(ranges)):
+            start = max(0, i-ranges[i])
+            end = min(n, i+ranges[i])
+            
+            max_reach[start] = max(max_reach[start], end)
+            
+        taps = 0
+        curr_end = 0
+        next_end = 0
         
         for i in range(n+1):
-            tap_start = max(0, i-ranges[i])
+            if i > next_end:
+                return -1
             
-            tap_end = min(n, i+ranges[i])
-            
-            for j in range(tap_start, tap_end+1):
+            if i > curr_end:
+                taps += 1
+                curr_end = next_end
                 
-                dp[tap_end] = min(dp[tap_end], dp[j]+1)
+            next_end = max(next_end, max_reach[i])
         
-        if dp[n] == INF:
-            return -1
-        
-        return dp[n]
+        return taps
