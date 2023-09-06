@@ -16,9 +16,10 @@ class Solution:
         ans = []
         cur = head
         for i in range(k):
-            head = write = ListNode(None)
-            for j in range( width + ( i < remainder)):
-                write.next = write = ListNode(cur.val)
+            head = cur 
+            for j in range( width + ( i < remainder) - 1):
                 if cur: cur = cur.next
-            ans.append(head.next)
+            if cur: 
+                cur.next, cur = None, cur.next
+            ans.append(head)
         return ans        
