@@ -5,9 +5,18 @@ class Solution:
         deletions = 0
         used_frequencies = set()
         
-        for char, freq in cnt.items():
+        sorted_freqs = sorted(cnt.values(), reverse = True)
+        
+        for freq in sorted_freqs:
+            
+            if freq not in used_frequencies:
+                used_frequencies.add(freq)
+                continue
+                
             while freq > 0 and freq in used_frequencies:
                 freq -= 1
                 deletions += 1
+                
             used_frequencies.add(freq)
+            
         return deletions
