@@ -5,18 +5,16 @@ class Solution:
         deletions = 0
         used_frequencies = set()
         
-        sorted_freqs = sorted(cnt.values(), reverse = True)
+        heap = list(cnt.values())
+        heapq.heapify(heap)
         
-        for freq in sorted_freqs:
+        while heap:
+            freq = heapq.heappop(heap)
             
-            if freq not in used_frequencies:
-                used_frequencies.add(freq)
-                continue
-                
             while freq > 0 and freq in used_frequencies:
                 freq -= 1
                 deletions += 1
-                
-            used_frequencies.add(freq)
             
+            used_frequencies.add(freq)
+        
         return deletions
