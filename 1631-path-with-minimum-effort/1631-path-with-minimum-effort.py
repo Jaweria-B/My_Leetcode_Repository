@@ -1,25 +1,22 @@
 class Solution:
     def minimumEffortPath(self, heights: List[List[int]]) -> int:
-        
         rows, cols = len(heights), len(heights[0])
-        minHeap = [(0,0,0)]
-        directions = [(-1,0), (1,0), (0,-1), (0,1)]
-        visited = set()
-        costs = [[float("inf")]*cols for _ in range(rows)]
-        costs[0][0] = 0
+        directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+        dist = [[math.inf for _ in range(cols)] for _ in range(rows)]
+        dist[0][0] = 0
+        min_heap = [(0, 0, 0)]
         
-        while minHeap:
-            cost, row, col = heappop(minHeap)
-            visited.add((row, col))
+        while min_heap:
+            effort, x, y = heappop(min_heap)
             
-            for direction in directions:
-                r, c = row + direction[0], col + direction[1]
+            if x == rows-1 and y == cols-1:
+                return effort
+            for dx, dy in directions:
+                nx, ny = x+dx, y+dy
                 
-                if 0 <= r < rows and 0 <= c < cols and (r,c) not in visited:
-                    neighbour_cost = max(cost, abs(heights[row][col] - heights[r][c]))
-
-                    if neighbour_cost < costs[r][c]:
-                        heappush(minHeap, (neighbour_cost, r, c))
-                        costs[r][c] = neighbour_cost
+                if 0 <= nx < rows and 0 <= ny < cols:
                     
-        return costs[rows-1][cols-1]
+                    new_effort = max(effort, abs(heights[x][y] - heights[nx][ny]))
+                    if new_effort < dist[nx][ny]:
+                        dist[nx][ny] = new_effort
+                        heappush(min_heap, (new_effort, nx, ny))
