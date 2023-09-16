@@ -9,8 +9,6 @@ class Solution:
         while min_heap:
             effort, x, y = heappop(min_heap)
             
-            if x == rows-1 and y == cols-1:
-                return effort
             for dx, dy in directions:
                 nx, ny = x+dx, y+dy
                 
@@ -20,3 +18,5 @@ class Solution:
                     if new_effort < dist[nx][ny]:
                         dist[nx][ny] = new_effort
                         heappush(min_heap, (new_effort, nx, ny))
+        
+        return dist[rows-1][cols-1]
