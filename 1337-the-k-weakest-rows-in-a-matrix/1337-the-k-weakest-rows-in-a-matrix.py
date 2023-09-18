@@ -1,10 +1,19 @@
 class Solution:
     def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
-        heap = []
-        for i, row in enumerate(mat):
-            strength = sum(row)
-            heapq.heappush(heap, (-strength, -i))
-            if len(heap) > k:
-                heapq.heappop(heap)
         
-        return [-i for _, i in sorted(heap, reverse=True)]
+        def binarySearch(arr):
+            left, right = 0, len(arr) -1
+            
+            while left <= right:
+                mid = (right + left) // 2
+            
+                if arr[mid] == 1:
+                    left = mid + 1
+                else:
+                    right = mid - 1 
+            return left
+        
+        queue = [ ( binarySearch(row), idx ) for idx, row in enumerate(mat)]
+        heapq.heapify(queue)
+        
+        return [ (idx) for _, idx in heapq.nsmallest(k, queue)]
