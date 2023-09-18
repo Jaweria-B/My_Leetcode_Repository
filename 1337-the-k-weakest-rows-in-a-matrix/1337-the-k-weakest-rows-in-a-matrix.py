@@ -1,6 +1,10 @@
 class Solution:
     def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+        heap = []
+        for i, row in enumerate(mat):
+            strength = sum(row)
+            heapq.heappush(heap, (-strength, -i))
+            if len(heap) > k:
+                heapq.heappop(heap)
         
-        row_strength = [(sum(row), i) for i, row in enumerate(mat)] 
-        row_strength.sort(key= lambda x: (x[0], x[1]))
-        return [row[1] for row in row_strength[:k]]
+        return [-i for _, i in sorted(heap, reverse=True)]
