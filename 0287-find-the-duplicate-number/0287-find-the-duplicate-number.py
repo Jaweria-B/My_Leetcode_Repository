@@ -1,13 +1,12 @@
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-#         Count 
+#         HashSet 
 
         n = len(nums)
-        count = [0] * (n+1)
+        hashSet = set()
         
         for i in range(n):
-            count[nums[i]] += 1
-            if count[nums[i]] > 1:
-                return nums[i]
+            if nums[i] in hashSet: return nums[i]
+            else: hashSet.add(nums[i])
         
         return n
