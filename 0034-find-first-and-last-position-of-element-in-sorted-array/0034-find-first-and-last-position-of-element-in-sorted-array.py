@@ -1,39 +1,26 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        if not nums:
-            return [-1,-1]
-        
-        # left -> True
-        def BinarySearch(nums, target, toFind):
-            start = 0
-            end = len(nums)-1
-            
-            ind = -1
-            
-            while start <= end:
-                
-                #mid = (start + end)//2
-                mid = start + (end - start)//2
-                if nums[mid] == target:
-                    ind = mid
-                    if toFind:  #left
-                        end = mid - 1
-                    else:  # right
-                        start = mid + 1
-                        
-                elif nums[mid] < target:
-                    start = mid + 1
-                    
+        a = [-1, -1]
+        a[0] = self.second( nums, target, True)
+        a[1] = self.second(nums, target, False)
+        return a
+    
+
+    def second(self, arr, target, isStart):
+        targetIndex = -1
+        start , end = 0 , len(arr) -1
+
+        while start <= end:
+            middle = start + (end - start) // 2
+
+            if arr[middle] == target:
+                targetIndex = middle
+                if isStart:
+                    end = middle - 1
                 else:
-                    end = mid - 1
-                
-            return ind
-        
-        leftMost = BinarySearch(nums, target, True)
-        if leftMost == -1:
-            return [-1,-1]
-        
-        rightMost = BinarySearch(nums, target, False)
-        
-        return [leftMost, rightMost]
-        
+                    start = middle + 1
+            elif target < arr[middle]:
+                end = middle - 1
+            else:
+                start  = middle + 1
+        return targetIndex
