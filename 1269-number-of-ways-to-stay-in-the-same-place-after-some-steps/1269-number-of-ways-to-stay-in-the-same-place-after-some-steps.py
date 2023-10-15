@@ -10,11 +10,9 @@ class Solution:
             for curr in range(arrLen - 1, -1, -1):
                 ans = dp[curr][remain - 1]
                 
-                if curr > 0:
-                    ans = (ans + dp[curr - 1][remain - 1]) % MOD
+                ans = (ans + dp[curr - 1][remain - 1]) % MOD if curr > 0 else ans
                 
-                if curr < arrLen - 1:
-                    ans = (ans + dp[curr + 1][remain - 1]) % MOD
+                ans = (ans + dp[curr + 1][remain - 1]) % MOD if curr < arrLen - 1 else ans
                 
                 dp[curr][remain] = ans
                 
