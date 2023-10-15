@@ -1,21 +1,21 @@
 class Solution:
     def numWays(self, steps: int, arrLen: int) -> int:
-        @cache
-        
-        def dp(curr, remain):
-            if remain == 0:
-                if curr == 0:
-                    return 1
-                return 0
-            
-            ans = dp(curr, remain - 1)
-            
-            ans = (ans + dp(curr - 1, remain - 1)) % MOD if curr > 0 else ans 
-            
-            ans = (ans + dp(curr + 1, remain - 1)) % MOD if curr < arrLen - 1 else ans
-            
-            return ans
-        
         MOD = 10 ** 9 + 7
+        arrLen = min(arrLen, steps)
         
-        return dp(0, steps)
+        dp = [[0] * (steps + 1) for _ in range(arrLen)]
+        dp[0][0] = 1
+        
+        for remain in range(1, steps + 1):
+            for curr in range(arrLen - 1, -1, -1):
+                ans = dp[curr][remain - 1]
+                
+                if curr > 0:
+                    ans = (ans + dp[curr - 1][remain - 1]) % MOD
+                
+                if curr < arrLen - 1:
+                    ans = (ans + dp[curr + 1][remain - 1]) % MOD
+                
+                dp[curr][remain] = ans
+                
+        return dp[0][steps]
