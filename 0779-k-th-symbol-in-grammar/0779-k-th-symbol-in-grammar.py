@@ -1,25 +1,21 @@
 class Solution:
+    
+    def recursion(self, n: int, k: int) -> int:
+        
+        if n == 1:
+            return 0
+        
+        total_elements = 2 ** (n-1)
+        half_elements = total_elements // 2
+        
+        if k > half_elements:
+            
+            return 1 - self.recursion(n, k - half_elements)
+        return self.recursion(n - 1, k)
+    
+    
     def kthGrammar(self, n: int, k: int) -> int:
         
-        def depthFirstSearch(n: int, k: int, rootVal: int) -> int:
-            
-            if n == 1:
-                return rootVal
+        return self.recursion(n, k)
         
-            totalNodes = 2 ** (n - 1)
-
-            # Target node is in right half ?
-            
-            if k > (totalNodes / 2):
-                
-                nextRootVal = 1 if rootVal == 0 else 0
-                return depthFirstSearch(n - 1, k - (totalNodes / 2), nextRootVal)
-            
-            # Target node is in left half ?
-            
-            else:
-                
-                nextRootVal = 0 if rootVal == 0 else 1
-                return depthFirstSearch(n - 1, k, nextRootVal)
-            
-        return depthFirstSearch(n, k, 0)
+        
