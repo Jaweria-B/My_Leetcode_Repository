@@ -2,10 +2,8 @@ class Solution:
     def findArray(self, pref: List[int]) -> List[int]:
         
         n = len(pref)
-        arr = []
-        arr.append(pref[0])
         
-        for i in range(1, n):
-            arr.append(pref[i] ^ pref[i-1])
+        for i in range(n-1, 0, -1):
+            pref[i] = pref[i] ^ pref[i-1]
             
-        return arr
+        return pref
