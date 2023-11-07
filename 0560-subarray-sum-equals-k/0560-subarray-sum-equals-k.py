@@ -2,20 +2,18 @@ class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         n = len(nums)
         ans = 0
+        prefixSum = 0
         
         dic = {}
         dic[0] =  1
-        
-        preSum = [nums[0]]
-        
-        for i in nums[1:]:
-            preSum.append(i+ preSum[-1])
-        
-        for i in preSum:
+       
+        for i in nums:
             
-            if i-k in dic:
-                ans += dic[i-k]
+            prefixSum += i
             
-            dic[i] = dic.get(i, 0) + 1
+            if prefixSum-k in dic:
+                ans += dic[prefixSum - k]
+            
+            dic[prefixSum] = dic.get(prefixSum, 0) + 1
             
         return ans
