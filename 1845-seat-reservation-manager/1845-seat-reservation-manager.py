@@ -1,22 +1,15 @@
 class SeatManager:
 
     def __init__(self, n: int):
-        self.marker = 1
+        self.minHeap = []
+        for i in range(1, n+1):
+            heappush(self.minHeap, i)
         
-        self.available_seats = []
-
     def reserve(self) -> int:
-        if self.available_seats:
-            seat_number = heapq.heappop(self.available_seats)
-            return seat_number
-        
-        seat_number = self.marker 
-        self.marker += 1
-        return seat_number
+        return heappop(self.minHeap)
 
     def unreserve(self, seatNumber: int) -> None:
-        heapq.heappush(self.available_seats, seatNumber)
-
+        heappush(self.minHeap, seatNumber)
 
 # Your SeatManager object will be instantiated and called as such:
 # obj = SeatManager(n)
