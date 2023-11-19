@@ -1,11 +1,16 @@
 class Solution:
     def reductionOperations(self, nums: List[int]) -> int:
-        nums.sort()
-        ans = 0
-        up = 0
+        n = len(nums)
+        freq = [0] * 50001
         
-        for i in range(1, len(nums)):
-            if nums[i] != nums[i-1]:
-                up += 1
-            ans += up
-        return ans
+        for i in nums:
+            freq[i] += 1
+        
+        res, operations = 0, 0
+        
+        for i in range(50000, 0, -1):
+            if freq[i] > 0:
+                operations += freq[i]
+                res += operations - freq[i]
+                
+        return res
