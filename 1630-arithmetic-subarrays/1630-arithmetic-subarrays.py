@@ -2,17 +2,27 @@ class Solution:
     def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
         
         def check(arr):
-            arr.sort()
+            Min = min(arr)
+            Max = max(arr)
             
-            diff = arr[1] - arr[0]
+            if (Max - Min) % (len(arr) - 1) != 0:
+                return False
             
-            for i in range(2, len(arr)):
+            diff = (Max - Min) // (len(arr) - 1)
+            
+            
+            arr_set = set(arr)
+            curr = Min
+            
+            while curr < Max:
                 
-                if arr[i] - arr[i-1] != diff:
+                if curr not in arr_set:
                     return False
-                
+                curr += diff
+            
             return True
-                
+           
+            
         ans = []
         m = len(l)
         
