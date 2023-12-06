@@ -1,13 +1,17 @@
 class Solution:
     def totalMoney(self, n: int) -> int:
-        ans = 0
-        monday = 1
+        k = n // 7
+        first_element = 28
+        last_element = first_element + (k - 1) * 7
         
-        while n > 0:
-            for day in range(min(n, 7)):
-                ans += monday + day
+        arith_seq = k * ( first_element + last_element ) // 2
+        
+        monday = k + 1
+        last_week_sum = 0
+        
+        for day in range(n % 7):
+            last_week_sum += monday + day
             
-            n -= 7
-            monday += 1
+        total_sum = arith_seq + last_week_sum
         
-        return ans
+        return total_sum
