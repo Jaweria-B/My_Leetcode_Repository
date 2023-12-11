@@ -1,12 +1,10 @@
 class Solution:
     def findSpecialInteger(self, arr: List[int]) -> int:
-        counts = defaultdict(int)
-        target = len(arr) // 4
         
-        for num in arr:
-            counts[num] += 1
+        size = len(arr) // 4
         
-            if counts[num] > target:
-                return num
+        for i in range(len(arr) - size):
+            if arr[i] == arr[i + size]:
+                return arr[i]
         
         return -1
