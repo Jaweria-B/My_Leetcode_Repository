@@ -7,30 +7,20 @@
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         
-        queue = collections.deque()
-        
-        queue.append((root.left, root.right))
-        
-        while queue:
-            size = len(queue)
+        def dfs(left, right):
             
-            for i in range(size):
-                
-                left, right = queue.pop()
-                
-                if (left and not right) or (right and not left):
+            if not left and not right:
+                return True
+            
+            elif (left and not right) or ( right and not left):
+                return False
+            
+            else:
+                if left.val != right.val:
                     return False
                 
-                elif not left and not right:
-                    continue
-                    
-                else:
-                    if left.val!= right.val:
-                        return False
-                    
-                    queue.append((left.left, right.right))
-                    
-                    queue.append((left.right, right.left))
-        
-        return True
+                return dfs(left.right, right.left) and dfs(left.left, right.right)
+                
+                
+        return dfs(root.left, root.right)
             
