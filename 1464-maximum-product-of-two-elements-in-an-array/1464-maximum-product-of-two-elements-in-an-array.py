@@ -1,14 +1,8 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
+        ans = 0
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                ans = max(ans, (nums[i] - 1) * (nums[j] - 1))
         
-        maximum = float('-INF')
-        sec_max = float('-INF')
-        
-        for i in nums:
-            if i >= maximum:
-                sec_max = maximum
-                maximum = i
-            elif i >= sec_max:
-                sec_max = i
-                
-        return (maximum - 1) * (sec_max - 1)
+        return ans
