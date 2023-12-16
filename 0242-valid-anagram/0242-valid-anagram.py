@@ -1,9 +1,14 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        for char in s:
-            if char in t:
-                t = t.replace(char, '', 1)
-            else:    
-               return False
-        return len(t) == 0
+        s_list = [0] * 26
+        for ch in s:
+            s_list[ord(ch) - ord('a')] += 1
+            
+        t_list = [0] * 26
+        for ch in t:            
+            t_list[ord(ch) - ord('a')] += 1
+            
+
         
+        return s_list == t_list
+                
