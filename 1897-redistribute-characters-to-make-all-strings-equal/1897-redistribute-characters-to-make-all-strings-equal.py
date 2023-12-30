@@ -2,6 +2,9 @@ class Solution:
     def makeEqual(self, words: List[str]) -> bool:
         length = len(words)
         
+        if length == True:
+            return True
+        
         chars = [0] * 26
         
         for word in words:
