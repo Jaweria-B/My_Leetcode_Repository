@@ -1,9 +1,16 @@
 class Solution:
     def minOperations(self, nums: List[int]) -> int:
-        counter = Counter(nums)
-        ans = 0
-        for c in counter.values():
-            if c == 1: 
-                return -1
-            ans += ceil(c / 3)
-        return ans
+        dic = defaultdict(int)
+        
+        for i in nums:
+            dic[i] += 1
+        
+        if min(dic.values()) == 1:
+            return -1
+        
+        output = 0
+        
+        for num, count in dic.items():
+            output += ceil(count/3)
+        
+        return output
