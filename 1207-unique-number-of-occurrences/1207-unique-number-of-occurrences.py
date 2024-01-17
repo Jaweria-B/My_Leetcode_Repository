@@ -5,7 +5,4 @@ class Solution:
         for i in arr:
             occurence[i] += 1
             
-        if len(set(occurence.values())) == len(occurence):
-            return True
-        
-        return False
+        return len(set(occurence.values())) == len(occurence)
