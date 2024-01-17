@@ -5,11 +5,7 @@ class Solution:
         for i in arr:
             occurence[i] += 1
             
-        unique = set()
+        if len(set(occurence.values())) == len(occurence):
+            return True
         
-        for val in occurence.values():
-            if val in unique:
-                return False
-            unique.add(val)
-            
-        return True
+        return False
