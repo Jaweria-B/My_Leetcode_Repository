@@ -15,7 +15,13 @@ class Solution:
         x = row[coordinates[0]]
         y = int(coordinates[1])
         
-        if (x == y) or (x % 2 == 0 and y % 2 == 0 ) or ((x + y) % 2 == 0):
-            return True
+        if y % 2 == 0:
+            if x % 2 == 0:
+                return True
+            else:
+                return False
         else:
-            return False
+            if x % 2 == 0:
+                return False
+            else:
+                return True
