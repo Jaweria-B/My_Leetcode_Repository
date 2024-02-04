@@ -5,33 +5,5 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        if t == "": 
-            return ""
-
-        countT, window = defaultdict(int), defaultdict(int)
-        
-        for c in t:
-            countT[c] += 1 
-
-        have, need = 0, len(countT)
-        res, resLen = [-1, -1], float("infinity") 
-        l = 0
-        for r in range(len(s)):
-            c = s[r] 
-            window[c] += 1
-
-            if c in countT and window[c] == countT[c]: 
-                have += 1
-
-            while have == need:
-                
-                if (r - l + 1) < resLen: 
-                    res = [l, r]
-                    resLen = r - l + 1
-                
-                window[s[l]] -= 1 
-                if s[l] in countT and window[s[l]] < countT[s[l]]: 
-                    have -= 1
-                l += 1
-        l, r = res
-        return s[l : r + 1] if resLen != float("infinity") else ""
+        return (g:={'s':s,'t':t,'a':0,'c':Counter(),'d':Counter(t),'r':[inf,'']}) and \
+            all([g.update({'b':b}),exec('c[s[b]]+=1',g),exec('while all(c[v]>=d[v] for v in d):r=min(r,[b-a+1,s[a:b+1]]);c[s[a]]-=1;a+=1',g)] for b in range(len(s))) and g['r'][1]
