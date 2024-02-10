@@ -3,16 +3,14 @@ class Solution:
         res = 0
         
         for i in range(len(s)):
-            l = r = i
-            while l >= 0 and r < len(s) and s[l] == s[r]:
-                res += 1
-                l -= 1
-                r += 1
-            
-            l = i
-            r = i + 1
-            while l >= 0 and r < len(s) and s[l] == s[r]:
-                res += 1
-                l -= 1
-                r += 1
+            res += self.countPalindrome(s, i, i)
+            res += self.countPalindrome(s, i + 1, i)
         return res
+    
+    def countPalindrome(self, s, r , l):
+        count = 0
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+                count += 1
+                l -= 1
+                r += 1
+        return count
