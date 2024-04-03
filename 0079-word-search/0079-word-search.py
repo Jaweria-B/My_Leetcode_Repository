@@ -1,30 +1,27 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
+        ROWS, COLS = len(board), len(board[0])
+        path = set()
         
-        rows = len(board)
-        columns = len(board[0])
-
-        def find(board, word, i, j):
-            if len(word) == 0: 
+        def dfs(r, c, i):
+            if i == len(word):
                 return True
             
-            if i<0 or i >= rows or j<0 or j >= columns or board[i][j] != word[0] or board[i][j]==' ': 
+            if ( r < 0 or c < 0 or
+                r >= ROWS or c >= COLS or word[i] != board[r][c] or 
+               (r, c) in path):
                 return False
             
-            c = board[i][j]
-            board[i][j] = ' '
-            word = word[1:]
-            up = find(board, word, i-1, j)
-            down = find(board, word, i+1, j)
-            left = find(board, word, i, j-1)
-            right = find(board, word, i, j+1)
-            res = up or down or left or right
-            board[i][j] =c
+            path.add((r, c))
+            res = (dfs(r + 1, c, i + 1) or
+                  dfs(r - 1, c, i + 1) or
+                  dfs(r, c + 1, i + 1) or
+                  dfs(r, c - 1, i + 1))
+            path.remove((r,c))
             return res
         
-        for r in range(rows):
-            for c in range(columns):
-                if (board[r][c] == word[0]) and find(board, word, r,c):
-                    return True
+        for r in range(ROWS):
+            for c in range(COLS):
+                if dfs(r, c, 0): return True   
                 
         return False
