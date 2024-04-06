@@ -18,7 +18,6 @@ class Solution:
         for c in res[::-1]:
             if c == "(" and count > 0:
                 count -= 1
-                continue
-            filtered.append(c)
+            else: filtered.append(c)
         
         return "".join(filtered[::-1])
