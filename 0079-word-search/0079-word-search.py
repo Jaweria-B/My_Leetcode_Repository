@@ -1,27 +1,22 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        ROWS, COLS = len(board), len(board[0])
-        path = set()
-        
-        def dfs(r, c, i):
-            if i == len(word):
+        def backtrack(i, j, k):
+            if k == len(word):
                 return True
-            
-            if ( r < 0 or c < 0 or
-                r >= ROWS or c >= COLS or word[i] != board[r][c] or 
-               (r, c) in path):
+            if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or board[i][j] != word[k]:
                 return False
             
-            path.add((r, c))
-            res = (dfs(r + 1, c, i + 1) or
-                  dfs(r - 1, c, i + 1) or
-                  dfs(r, c + 1, i + 1) or
-                  dfs(r, c - 1, i + 1))
-            path.remove((r,c))
-            return res
+            temp = board[i][j]
+            board[i][j] = ''
+            
+            if backtrack(i+1, j, k+1) or backtrack(i-1, j, k+1) or backtrack(i, j+1, k+1) or backtrack(i, j-1, k+1):
+                return True
+            
+            board[i][j] = temp
+            return False
         
-        for r in range(ROWS):
-            for c in range(COLS):
-                if dfs(r, c, 0): return True   
-                
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if backtrack(i, j, 0):
+                    return True
         return False
